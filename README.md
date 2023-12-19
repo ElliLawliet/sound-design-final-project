@@ -1,6 +1,6 @@
 # AI Random Song Generator
 
-By Elli, Mina, 俞翔, 珮菱, Vincent ...
+By Elli, Mina, 俞翔, 珮菱, Vincent ... but in this one elli is responsible for all the broken code
 
 This website creates a random song with a unique melody, chord progression, bassline and drumline using our privileged music generation algorithms. You can pick your parameters to influence the sound of the song.
 
