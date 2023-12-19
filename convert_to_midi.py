@@ -12,7 +12,7 @@ def create_midi_from_music_notation(music_notation):
     note_lengths = chord_progression_data["note_lengths"]
 
     # Create a stream for the chord progression MIDI file
-    chord_progression_stream = stream.Score()
+    chord_progression_stream = stream.Stream()
     chord_progression_part = stream.Part()
 
     # Add a time signature and tempo to the part
@@ -38,7 +38,7 @@ def create_midi_from_music_notation(music_notation):
 
     # Create bassline notes and lengths
     bassline_notes_obj = [note.Note(n) for n in bassline_notes]
-    bassline_stream = stream.Score()
+    bassline_stream = stream.Stream()
     bassline_part = stream.Part()
     for bass_note, length in zip(bassline_notes_obj, bassline_note_lengths):
         bass_note.quarterLength = length
@@ -57,7 +57,7 @@ def create_midi_from_music_notation(music_notation):
 
         # Create melody notes and lengths
         melody_notes_obj = [note.Note(n) for n in melody_notes]
-        melody_stream = stream.Score()
+        melody_stream = stream.Stream()
         melody_part = stream.Part()
         for melody_note, length in zip(melody_notes_obj, melody_note_lengths):
             melody_note.quarterLength = length
@@ -68,6 +68,13 @@ def create_midi_from_music_notation(music_notation):
 
         # Write the melody MIDI file
         melody_stream.write('midi', fp='melody.mid')
+
+    nScore = stream.Score()
+    nScore.insert(0,melody_stream)
+    nScore.insert(0,chord_progression_stream)
+    nScore.insert(0,bassline_stream)
+    nScore.write('midi', fp = 'all.mid')
+
 
 def main(json_file):
     with open(json_file, 'r') as file:

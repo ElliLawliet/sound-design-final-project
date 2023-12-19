@@ -36,7 +36,7 @@ app.get("/load-drumline", async (req, res) => {
 });
 
 const generateMusicNotation = (res) => {
-  const command = `python3 ${__dirname}/musicGenerator.py`; // Needs to have python3 installed
+  const command = `python ${__dirname}/musicGenerator.py`; // Needs to have python3 installed
   exec(command, (err, stdout, stderr) => {
     if (err) {
       console.error(err);
@@ -57,7 +57,7 @@ app.get("/generate-music-notation", (req, res) => {
 });
 
 const convertToMidi = () => {
-  const command = `python3 ${__dirname}/convert_to_midi.py output_music_notation.json`; // Needs to have python3 installed
+  const command = `python ${__dirname}/convert_to_midi.py output_music_notation.json`; // Needs to have python3 installed
   exec(command, (err, stdout, stderr) => {
     if (err) {
       console.error(err);
@@ -71,7 +71,7 @@ app.get("/convert-to-midi", (req, res) => {
   res.send("cool");
 });
 
-const playMidi = (midiFile = "chord_progression.mid", env = "none") => {
+const playMidi = (midiFile = "melody.mid", env = "none") => {
   const command = `chuck ${__dirname}/play_midi.ck:${midiFile}:${env}`; // Needs to have python3 installed
   exec(command, (err, stdout, stderr) => {
     if (err) {
@@ -89,7 +89,7 @@ app.get("/play-midi", (req, res) => {
 app.post("/generate-and-play-song", async (req, res) => {
   const env = req.query.environment;
   console.log(env);
-  // loadDrumline();
+  //loadDrumline();
   generateMusicNotation();
   convertToMidi();
   // playDrumsMidi("drums.mid");
